@@ -53,9 +53,17 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
-
-
-
+for i = 1:m
+  for j = 1:50
+    % select i random samples from training set and validation set
+    rand_rows = randperm(m, i);
+    theta = trainLinearReg(X(rand_rows, :), y(rand_rows,:), lambda);
+    error_train(i) = error_train(i) + linearRegCostFunction(X(rand_rows, :), y(rand_rows,:), theta, 0);
+    error_val(i) = error_val(i) + linearRegCostFunction(Xval(rand_rows,:), yval(rand_rows,:), theta, 0);
+  end
+  error_train(i) = error_train(i)/50;
+  error_val(i) = error_val(i)/50;
+end
 
 
 
